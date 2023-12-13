@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="color"]::-webkit-color-swatch {
+	border-radius: 1000px;
+    overflow: hidden;
+    border: none;
+    height: 60px;
+    width: 60px;
+    shadow: none;
+};
