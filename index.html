@@ -6,19 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./output.css">
+    <script src="./javascript.js" defer></script>
 </head>
+
 
 <body class="h-screen flex flex-col items-center justify-center">
     <div class="-translate-y-9 flex flex-col items-center gap-14">
     <h1 class="text-6xl text-blue-700 font-bold">Etchy-a-Sketchy</h1>
-    <div class="w-full flex flex-row gap-8 items-start">
-        <div class="w-40 flex flex-col gap-3">
-            <div class="bg-slate-100 w-full rounded-md items-center justify-center relative flex pt-11 pb-10">
+    <div class="flex flex-row gap-8 items-start">
+        <div class="w-48 flex flex-col gap-3">
+
+            <div class="bg-slate-50 w-full rounded-md items-center justify-center relative flex pt-11 pb-10">
                 <p class="text-sm text-slate-500 absolute left-4 top-3">Color</p>
-                <div class="rounded-full overflow-hidden">
-                <input class="w-auto h-auto border-none m-0 p-0 cursor-pointer appearance-none" type="color">
+                
+                <input class="w-auto h-auto relative border-none m-0 p-0 cursor-pointer appearance-none hover:scale-105 transition-all bg-transparent" type="color">
+            
             </div>
+
+            <div class="bg-slate-50 w-full rounded-md items-center justify-center relative flex flex-col gap-2 px-4 pt-12 pb-6">
+                <p class="text-sm text-slate-500 absolute left-4 top-3">Mode</p>
+                <button class="w-full rounded-md border border-slate-200 text-base text-slate-600 py-3 bg-slate-50 hover:bg-slate-300 transition-all">Normal</button>
+                <button class="w-full rounded-md border border-slate-200 text-base text-slate-600 py-3 bg-slate-50 hover:bg-slate-300 transition-all">Rainbow</button>
+                <button class="w-full rounded-md border border-slate-200 text-base text-slate-600 py-3 bg-slate-50 hover:bg-slate-300 transition-all">Gradient</button>
+                <button class="w-full rounded-md border border-slate-200 text-base text-slate-600 py-3 bg-slate-50 hover:bg-slate-300 transition-all">Eraser</button>
             </div>
+
+            <div class="bg-slate-50 w-full rounded-md items-center justify-center relative flex flex-col gap-2 px-5 pt-12 pb-6">
+                <p class="text-sm text-slate-500 absolute left-4 top-3">Grid Size</p>
+                <p class="text-base text-slate-700 text-center">24 x 24</p>
+                <input id="dimension-selector" type="range" min="1" max="60" value="12">
+            </div>
+
+            <button class="w-full bg-blue-500 hover:bg-blue-600 transition-all text-slate-50 text-base py-3 rounded">Clear</button>
+
+            </div>
+
+            <div id="canvas" class="aspect-square bg-slate-100 rounded h-[652px] w-auto flex flex-col gap-1"></div>
+
         </div>
 
     </div>
