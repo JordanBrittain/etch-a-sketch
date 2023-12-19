@@ -1,6 +1,10 @@
 const canvas = document.querySelector("#canvas");
 const dimensionSelector = document.querySelector("#dimension-selector");
 const dimensionText = document.querySelector("#dimensions");
+const colorInput = document.querySelector("#color-input");
+const clearButton = document.querySelector("#clear-button");
+
+
 
 function updateDimensionUI(chosenWidth) {
   dimensionText.textContent = chosenWidth + " x " + chosenWidth;
@@ -32,46 +36,106 @@ function getRandomHexColor() {
   return color;
 }
 
+//Button Toggle
+//add event listenders to the buttons
+//when button is clicked pass in id
+//switch brushmode variable based on id
+//toggle some classes on the button that was clicked
+//toggle some classes on the buttons that weren't clicked
+
+let brushMode = "normal";
+
+function handleModeChange(event) {
+  
+  brushMode = event.target.id;
+  
+  brushModeButtons.forEach((button) => {
+    button.classList.remove("!bg-slate-900", "!text-slate-50");
+  });
+
+  event.target.classList.add("!bg-slate-900", "!text-slate-50");
+
+}
+
+const brushModeButtons = document.querySelectorAll("div#brush-mode-controls > button");
+
+brushModeButtons.forEach((button) => {
+  button.addEventListener("click", handleModeChange);
+});
+
 //Marking the canvas
 
-let brushMode = "rainbow";
+
+
+
+let brushColor = colorInput.value;
+
+function handleColorChange() {
+brushColor = colorInput.value;
+};
+
+colorInput.addEventListener("input", handleColorChange);
+
+console.log(colorInput.value);
+
+
+
 
 function markCanvas(event) {
   if (isCanvasClicked) {
     let cellClasses = event.target.classList;
+    let cellStyle = event.target.style;
 
     switch (brushMode) {
       case "gradient":
-        if (cellClasses.contains("bg-slate-100")) {
-          cellClasses.replace("bg-slate-100", "bg-slate-300");
-        } else if (cellClasses.contains("bg-slate-300")) {
-          cellClasses.replace("bg-slate-300", "bg-slate-500");
-        } else if (cellClasses.contains("bg-slate-500")) {
-          cellClasses.replace("bg-slate-500", "bg-slate-700");
-        } else if (cellClasses.contains("bg-slate-700")) {
-          cellClasses.replace("bg-slate-700", "bg-slate-900");
+        cellStyle.backgroundColor = brushColor;
+        let currentOpacity = cellStyle.opacity;
+
+        switch (currentOpacity) {
+          case "0.2":
+            cellStyle.opacity = 0.4;
+            break;
+
+          case "0.4":
+            cellStyle.opacity = 0.6;
+            break;
+
+          case "0.6":
+            cellStyle.opacity = 0.8;
+            break;
+
+          case "0.8":
+            cellStyle.opacity = 1;
+            break;
+
+          case "1":
+            cellStyle.opacity = 1;
+            break;
+
+          default:
+            cellStyle.opacity = 0.2;
+            break;
         }
 
         break;
 
       case "normal":
-        cellClasses.add("bg-slate-900");
+        cellStyle.backgroundColor = brushColor;
+        cellStyle.opacity = 1;
         break;
 
       case "rainbow":
-        event.target.style.backgroundColor = getRandomHexColor();
+        cellStyle.backgroundColor = getRandomHexColor();
         break;
 
-        case "eraser":
-            event.target.style.backgroundColor = null;
+      case "eraser":
+        event.target.style.backgroundColor = null;
         cellClasses.add("bg-slate-100");
         break;
 
       default:
         break;
     }
-
-    //event.target.classList.add(brushClasses);
   }
 }
 
@@ -83,19 +147,16 @@ canvas.addEventListener(
   "mousedown",
   () => {
     isCanvasClicked = true;
-    console.log(isCanvasClicked);
   },
   true
 );
 
 canvas.addEventListener("mouseup", () => {
   isCanvasClicked = false;
-  console.log(isCanvasClicked);
 });
 
 canvas.addEventListener("mouseleave", () => {
   isCanvasClicked = false;
-  console.log(isCanvasClicked);
 });
 
 //Updating the canvas
@@ -126,12 +187,8 @@ function updateGridUI() {
   }
 }
 
-//store UI dimension DOM Elements
+clearButton.addEventListener("click", updateGridUI);
 
 updateGridUI();
 
 dimensionSelector.addEventListener("input", updateGridUI);
-
-//add event listeners to all the divs that change their styling on mousedown event
-//function for changing styling of div 'mark canvas'
-//call that function when event on div happens.
